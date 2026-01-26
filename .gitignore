@@ -4,3 +4,10 @@ venv/
 
 # SQLite database files
 *.db
+
+
+venv/
+__pycache__/
+*.pyc
+*.db
+.env
