@@ -1,0 +1,6 @@
+project/
+│
+├─ database.py      # engine, session, create_db_and_tables, CRUD functions
+├─ models.py        # SQLModel classes (Experiment, etc.)
+├─ schemas.py       # ExperimentCreate, ExperimentResponse
+├─ main.py          # FastAPI app and routes

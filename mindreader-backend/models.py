@@ -1,3 +1,4 @@
+# actual blueprint for storing data in the database
 from typing import Optional
 from sqlmodel import SQLModel, Field
 from datetime import datetime
