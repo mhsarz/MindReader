@@ -13,4 +13,10 @@ class ExperimentRead (BaseModel) : # thing we send back from backedn to front af
     variant : str # low_anchor, high_anchor
 
 
-class ResponseCreate ()
+class ResponseCreate (BaseModel) :
+    experiment_id : uuid.UUID # experiment
+    # backend can already find the user by looking at the experiment -> no session id needed
+    value : str
+    confidence: Optional[float] = None
+    reaction_time: Optional[int] = None
+
