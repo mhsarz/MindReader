@@ -1,5 +1,5 @@
 from sqlmodel import SQLModel, create_engine
-
+from models import Experiment
 DATABASE_URL = "sqlite:///mindreader.db" # the database file
 
 engine = create_engine(DATABASE_URL, echo=True)
