@@ -1,13 +1,16 @@
-# What data is allowed to come IN and go OUT of the API
+# What data is allowed to come IN and go OUT of the API -> Filtering and validation
 from pydantic import BaseModel
+import uuid
+from typing import Optional
 
-class ExperimentCreate(BaseModel) : # used when the client sends data to create a new experiment.
-    bias_type : str # anchor, framing, ...
-    variant : str # e.g low_anchor high_anchor
-    response_data : dict # anchor value, user estimation
+class ExperimentStart (BaseModel) :
+    bias_type : str # which experiment is starting
+    session_id: Optional[uuid.UUID] = None # which user -> Not mandatory cuz maybe is a new user
 
-class ExperimentResponse (BaseModel): # used when the server sends data back to the client.
-    experiment_id : int
+class ExperimentRead (BaseModel) : # thing we send back from backedn to front after start of experiment
+    id : uuid.UUID # experiment
+    session_id : uuid.UUID
+    variant : str # low_anchor, high_anchor
 
 
-# After POST -> accept JSON, convert to create, check types, return matched response
+class ResponseCreate ()
