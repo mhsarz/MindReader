@@ -1,13 +1,57 @@
-# Virtual environments
-venv/
-.venv/
-
-# SQLite database files
-*.db
-
-
-venv/
+# --- Python / Backend ---
 __pycache__/
-*.pyc
+*.py[cod]
+.venv/
+venv/
+env/
+
+# --- Database ---
+# STRICTLY IGNORE: Never push your actual database or logs
 *.db
+*.sqlite3
+*.log
+
+# --- VS Code ---
+.vscode/
+
+# --- React / Frontend ---
+# This is massive, never push it. Users install it via 'npm install'
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables (Sensitive keys)
 .env
+.env.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
