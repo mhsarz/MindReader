@@ -5,8 +5,22 @@ from models import Experiment, UserSession, Response
 from schemas import ExperimentRead, ExperimentStart, ResponseCreate
 import random
 import uuid
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:5173",  # frontend
+    "http://127.0.0.1:5173",  # Alternative address
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.on_event("startup")
 def on_startup(): # experiment start
