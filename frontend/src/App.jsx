@@ -1,34 +1,42 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [step, setStep] = useState(0) // Scene Tracker
+  const [gameData, setGameData] = useState(null) // Backpack
+
+  const startGame = async () => {
+    const response = await fetch('http://127.0.0.1:8000/api/experiments', {
+          method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              bias_type: "anchoring"
+            }),
+          }
+    )
+    
+
+    // 2. When data comes back:
+    const data = await response.json()
+    setGameData(data) // Save
+    
+    setStep(1) // re-render -> next step
+  } 
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="App">
+      {step === 0 ? (
+        <button onClick={startGame}>Start Experiment</button> // if it's not next scene
+      ) : ( 
+        <div>
+           <h2>Scene 1</h2>
+           <p>The game has started!</p> 
+        </div>
+      )} 
+    </div>
   )
 }
 
