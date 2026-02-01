@@ -5,6 +5,7 @@ import './App.css'
 function App() {
   const [step, setStep] = useState(0) // Scene Tracker
   const [gameData, setGameData] = useState(null) // Backpack
+  const [guess, setGuess] = useState('') // guessed value
 
   const startGame = async () => {
     const response = await fetch('http://127.0.0.1:8000/api/experiments', {
@@ -26,16 +27,59 @@ function App() {
     setStep(1) // re-render -> next step
   } 
 
+  const anchorValue = gameData?.variant === 'high_anchor' ? "500m" : "50m";
+
+  const submitGuess = async () => {
+   try {
+    const response = await fetch ('http://127.0.0.1:8000/api/responses', {
+        method: 'POST',
+        
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              experiment_id: gameData.id,
+              value: guess,
+              confidence: 5,
+              reaction_time: 1000
+            })
+          }
+    )
+   
+   if (response.ok) {
+        setStep(3) // Only move forward if the save worked
+      } else {
+        console.error("Failed to save response")
+      }
+    } catch (error) {
+      console.error("Error submitting guess:", error)
+    }
+}
+
   return (
     <div className="App">
       {step === 0 ? (
         <button onClick={startGame}>Start Experiment</button> // if it's not next scene
-      ) : ( 
+      ) : step === 1 ?( 
         <div>
-           <h2>Scene 1</h2>
-           <p>The game has started!</p> 
+           <h2>The first guess</h2>
+           <p>Do you thing the highest tree in the world is higher or lower than {anchorValue}</p> 
+           <button onClick={() => setStep(2)}>Lower</button>
+           <button onClick={() => setStep(2)}>Higher</button>
         </div>
-      )} 
+      ) : step === 2 ? (
+        <div>
+          <input type="text" value={guess} onChange={(e) => setGuess(e.target.value)} />
+          <button onClick={submitGuess}>Submit Final Guess</button>
+        </div>
+      ) :  step === 3 ? (
+          <div>
+            <h2>Thank You!</h2>
+            <p>Your guess has been recorded.</p>
+            <button onClick={() => window.location.reload()}>Play Again</button>
+          </div>
+      ) : null 
+    } 
     </div>
   )
 }
