@@ -6,7 +6,7 @@ function App() {
   const [step, setStep] = useState(0) // Scene Tracker
   const [gameData, setGameData] = useState(null) // Backpack
   const [guess, setGuess] = useState('') // guessed value
-
+  const [confidence, setConfidence] = useState(5) // initial confidence
   const startGame = async () => {
     const response = await fetch('http://127.0.0.1:8000/api/experiments', {
           method: 'POST',
@@ -40,7 +40,7 @@ function App() {
             body: JSON.stringify({
               experiment_id: gameData.id,
               value: guess,
-              confidence: 5,
+              confidence: confidence,
               reaction_time: 1000
             })
           }
@@ -63,13 +63,15 @@ function App() {
       ) : step === 1 ?( 
         <div>
            <h2>The first guess</h2>
-           <p>Do you thing the highest tree in the world is higher or lower than {anchorValue}</p> 
+           <p>Do you thing the highest tree in the world is higher or lower than {anchorValue}?</p> 
            <button onClick={() => setStep(2)}>Lower</button>
            <button onClick={() => setStep(2)}>Higher</button>
         </div>
       ) : step === 2 ? (
         <div>
           <input type="text" value={guess} onChange={(e) => setGuess(e.target.value)} />
+          <p>Confidence: {confidence}/10</p>
+          <input type="range" value={confidence} min={1} max={10} onChange={(e) => setConfidence(e.target.value)}/>
           <button onClick={submitGuess}>Submit Final Guess</button>
         </div>
       ) :  step === 3 ? (
