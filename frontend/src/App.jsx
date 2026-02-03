@@ -7,6 +7,8 @@ function App() {
   const [gameData, setGameData] = useState(null) // Backpack
   const [guess, setGuess] = useState('') // guessed value
   const [confidence, setConfidence] = useState(5) // initial confidence
+  const [startTime, setStartTime] = useState(0) // start of timer
+
   const startGame = async () => {
     const response = await fetch('http://127.0.0.1:8000/api/experiments', {
           method: 'POST',
@@ -41,7 +43,7 @@ function App() {
               experiment_id: gameData.id,
               value: guess,
               confidence: confidence,
-              reaction_time: 1000
+              reaction_time: Date.now() - startTime
             })
           }
     )
@@ -54,7 +56,11 @@ function App() {
     } catch (error) {
       console.error("Error submitting guess:", error)
     }
-}
+  }
+  const handleStartEstimation = () => {
+    setStep(2)
+    setStartTime(Date.now()) // The current timestamp in milliseconds
+  }
 
   return (
     <div className="App">
@@ -64,8 +70,8 @@ function App() {
         <div>
            <h2>The first guess</h2>
            <p>Do you thing the highest tree in the world is higher or lower than {anchorValue}?</p> 
-           <button onClick={() => setStep(2)}>Lower</button>
-           <button onClick={() => setStep(2)}>Higher</button>
+           <button onClick = {handleStartEstimation}>Lower</button>
+           <button onClick = {handleStartEstimation}>Higher</button>
         </div>
       ) : step === 2 ? (
         <div>
