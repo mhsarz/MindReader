@@ -6,6 +6,7 @@ from schemas import ExperimentRead, ExperimentStart, ResponseCreate
 import random
 import uuid
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import create_engine, select, func  
 
 app = FastAPI()
 
@@ -24,7 +25,6 @@ app.add_middleware(
 
 @app.on_event("startup")
 def on_startup(): # experiment start
-    # What goes here?
     create_db_and_tables()
 
 
@@ -69,4 +69,14 @@ def submit_response (response : ResponseCreate , db: Session = Depends(get_sessi
 
     return new_response
 
+@app.get ("/api/stats")
+def get_stats (db: Session = Depends(get_session)):
+    # Calculate High Anchor Average
+    avg_high = db.query(func.avg(Response.value)).join(Experiment).filter(Experiment.variant == "high_anchor").scalar()
+    # 2. Calculate Low Average
+    avg_low = db.query(func.avg(Response.value)).join(Experiment).filter(Experiment.variant == "low_anchor").scalar()
+    return {
+        "high_anchor": avg_high,
+        "low_anchor": avg_low
+    }
 
