@@ -8,6 +8,7 @@ function App() {
   const [guess, setGuess] = useState('') // guessed value
   const [confidence, setConfidence] = useState(5) // initial confidence
   const [startTime, setStartTime] = useState(0) // start of timer
+  const [stats, setStats] = useState(null)
 
   const startGame = async () => {
     const response = await fetch('http://127.0.0.1:8000/api/experiments', {
@@ -57,9 +58,17 @@ function App() {
       console.error("Error submitting guess:", error)
     }
   }
+
   const handleStartEstimation = () => {
     setStep(2)
     setStartTime(Date.now()) // The current timestamp in milliseconds
+  }
+
+  const fetchStats = async () => {
+    const response = await fetch('http://127.0.0.1:8000/api/stats')
+    const data = await response.json()
+    setStats(data) // Put the numbers in the backpack
+    setStep(4) // Move to the new "Results" scene    
   }
 
   return (
@@ -84,9 +93,26 @@ function App() {
           <div>
             <h2>Thank You!</h2>
             <p>Your guess has been recorded.</p>
+            <button onClick={fetchStats}>See Community Results</button>
             <button onClick={() => window.location.reload()}>Play Again</button>
           </div>
-      ) : null 
+      ) : step === 4 ? (
+          <div>
+            <h2>Community Results</h2>
+            
+            <div className="stat-box">
+              <p>High Anchor Average:</p>
+              <h3>{stats?.high_anchor ? Math.round(stats.high_anchor) + "m" : "No data"}</h3>
+            </div>
+
+            <div className="stat-box">
+              <p>Low Anchor Average:</p>
+              <h3>{stats?.low_anchor ? Math.round(stats.low_anchor) + "m" : "No data"}</h3>
+            </div>
+
+            <button onClick={() => window.location.reload()}>Play Again</button>
+          </div>
+        ) : null 
     } 
     </div>
   )
