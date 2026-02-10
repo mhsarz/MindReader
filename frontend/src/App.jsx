@@ -1,5 +1,7 @@
 import { useState } from 'react'
-
+import WelcomeScreen from './WelcomeScreen'
+import AnchorQuestion from './AnchorQuestion'
+import EstimationForm from './EstimationForm'
 import './App.css'
 
 function App() {
@@ -74,21 +76,20 @@ function App() {
   return (
     <div className="App">
       {step === 0 ? (
-        <button onClick={startGame}>Start Experiment</button> // if it's not next scene
+        <WelcomeScreen onStart={startGame} />
       ) : step === 1 ?( 
-        <div>
-           <h2>The first guess</h2>
-           <p>Do you thing the highest tree in the world is higher or lower than {anchorValue}?</p> 
-           <button onClick = {handleStartEstimation}>Lower</button>
-           <button onClick = {handleStartEstimation}>Higher</button>
-        </div>
+        <AnchorQuestion 
+        anchorValue={anchorValue}       // Pass the data down
+        onNext={handleStartEstimation}  // Pass the function down
+    />
       ) : step === 2 ? (
-        <div>
-          <input type="text" value={guess} onChange={(e) => setGuess(e.target.value)} />
-          <p>Confidence: {confidence}/10</p>
-          <input type="range" value={confidence} min={1} max={10} onChange={(e) => setConfidence(e.target.value)}/>
-          <button onClick={submitGuess}>Submit Final Guess</button>
-        </div>
+        <EstimationForm 
+          guess={guess}             // Wire 1: The current text
+          setGuess={setGuess}       // Wire 2: The tool to change text
+          confidence={confidence}   // Wire 3: The current slider value
+          setConfidence={setConfidence} // Wire 4: The tool to move slider
+          onSubmit={submitGuess}    // Wire 5: The submit button
+        />
       ) :  step === 3 ? (
           <div>
             <h2>Thank You!</h2>
