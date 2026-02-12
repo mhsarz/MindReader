@@ -2,6 +2,7 @@ import { useState } from 'react'
 import WelcomeScreen from './WelcomeScreen'
 import AnchorQuestion from './AnchorQuestion'
 import EstimationForm from './EstimationForm'
+import ResultsDisplay from './ResultsDisplay'
 import './App.css'
 
 function App() {
@@ -75,46 +76,38 @@ function App() {
 
   return (
     <div className="App">
-      {step === 0 ? (
-        <WelcomeScreen onStart={startGame} />
-      ) : step === 1 ?( 
-        <AnchorQuestion 
-        anchorValue={anchorValue}       // Pass the data down
-        onNext={handleStartEstimation}  // Pass the function down
-    />
-      ) : step === 2 ? (
-        <EstimationForm 
-          guess={guess}             // Wire 1: The current text
-          setGuess={setGuess}       // Wire 2: The tool to change text
-          confidence={confidence}   // Wire 3: The current slider value
-          setConfidence={setConfidence} // Wire 4: The tool to move slider
-          onSubmit={submitGuess}    // Wire 5: The submit button
-        />
-      ) :  step === 3 ? (
-          <div>
-            <h2>Thank You!</h2>
-            <p>Your guess has been recorded.</p>
-            <button onClick={fetchStats}>See Community Results</button>
-            <button onClick={() => window.location.reload()}>Play Again</button>
-          </div>
-      ) : step === 4 ? (
-          <div>
-            <h2>Community Results</h2>
-            
-            <div className="stat-box">
-              <p>High Anchor Average:</p>
-              <h3>{stats?.high_anchor ? Math.round(stats.high_anchor) + "m" : "No data"}</h3>
-            </div>
-
-            <div className="stat-box">
-              <p>Low Anchor Average:</p>
-              <h3>{stats?.low_anchor ? Math.round(stats.low_anchor) + "m" : "No data"}</h3>
-            </div>
-
-            <button onClick={() => window.location.reload()}>Play Again</button>
-          </div>
-        ) : null 
-    } 
+      {
+        step === 0 ? (
+          <WelcomeScreen 
+            onStart={startGame} 
+          />
+        ) : 
+        step === 1 ?( 
+          <AnchorQuestion 
+            anchorValue={anchorValue}       // Pass the data down
+            onNext={handleStartEstimation}  // Pass the function down
+          />
+        ) : 
+        step === 2 ? (
+          <EstimationForm 
+            guess={guess}             // Wire 1: The current text
+            setGuess={setGuess}       // Wire 2: The tool to change text
+            confidence={confidence}   // Wire 3: The current slider value
+            setConfidence={setConfidence} // Wire 4: The tool to move slider
+            onSubmit={submitGuess}    // Wire 5: The submit button
+          />
+        ) :  
+        step == 3 || step == 4 ? (
+          <ResultsDisplay 
+            showStats={step === 4}      // If step is 4, show numbers. If 3, show "Thank You".
+            stats={stats}               // The data
+            onFetchStats={fetchStats}   // The button to get data
+            onReset={() => window.location.reload()} // The Play Again button
+          />
+        )
+        : 
+        null 
+      } 
     </div>
   )
 }
