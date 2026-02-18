@@ -1,37 +1,38 @@
-// src/ResultsDisplay.jsx
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
-export default function ResultsDisplay({ 
-    showStats,           // Boolean: Are we showing numbers yet?
-    stats,               // The data: { high_anchor: 650, low_anchor: 120 }
-    onFetchStats,        // Function: Go get the numbers
-    onReset              // Function: Play Again
-}) {
+export default function ResultsDisplay({ showStats, stats, onFetchStats, onReset }) {
+    
     if (!showStats) {
-        // State A: Thank You Screen
         return (
             <div className="scene-container">
                 <h2>Thank You!</h2>
                 <p>Your guess has been recorded.</p>
-                
                 <button onClick={onFetchStats}>See Community Results</button>
                 <button onClick={onReset}>Play Again</button>
             </div>
         )
     }
 
-    // State B: Results Screen
+    // This translates your backend data into Recharts data!
+    const chartData = stats ? [
+        { name: 'High Anchor (500m)', average: Math.round(stats.high_anchor) },
+        { name: 'Low Anchor (50m)', average: Math.round(stats.low_anchor) }
+    ] : [];
+
     return (
-        <div className="scene-container">
+        <div className="scene-container" style={{ width: '100%', maxWidth: '600px' }}>
             <h2>Community Results</h2>
             
-            <div className="stat-box">
-                <p>High Anchor Average:</p>
-                <h3>{stats?.high_anchor ? Math.round(stats.high_anchor) + "m" : "No data"}</h3>
-            </div>
-
-            <div className="stat-box">
-                <p>Low Anchor Average:</p>
-                <h3>{stats?.low_anchor ? Math.round(stats.low_anchor) + "m" : "No data"}</h3>
+            {/* The Magic Chart */}
+            <div style={{ width: '100%', height: '300px', margin: '30px 0' }}>
+                <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={chartData}>
+                        <XAxis dataKey="name" stroke="#ffffff" />
+                        <YAxis stroke="#ffffff" />
+                        <Tooltip contentStyle={{ backgroundColor: '#333', border: 'none' }} />
+                        <Bar dataKey="average" fill="#646cff" radius={[4, 4, 0, 0]} />
+                    </BarChart>
+                </ResponsiveContainer>
             </div>
 
             <button onClick={onReset}>Play Again</button>
