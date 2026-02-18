@@ -8,6 +8,17 @@ import uuid
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import create_engine, select, func  
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Paste your actual Neon string inside the quotes!
+# IMPORTANT: Make sure it starts with 'postgresql://' (with the 'ql' at the end)
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
+# Notice we removed the 'connect_args' entirely. Postgres doesn't need it!
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
+
 app = FastAPI()
 
 origins = [
