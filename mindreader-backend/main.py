@@ -1,35 +1,24 @@
 from fastapi import FastAPI, Depends, HTTPException
-from sqlmodel import Session, select
+from sqlmodel import Session
 from database import create_db_and_tables, get_session
 from models import Experiment, UserSession, Response
 from schemas import ExperimentRead, ExperimentStart, ResponseCreate
-import random
-import uuid
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import create_engine, select, func  
-
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-# Paste your actual Neon string inside the quotes!
-# IMPORTANT: Make sure it starts with 'postgresql://' (with the 'ql' at the end)
-SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
-# Notice we removed the 'connect_args' entirely. Postgres doesn't need it!
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+from sqlalchemy import func  
+import random
 
 app = FastAPI()
 
 origins = [
-    "http://localhost:5173",  # frontend
-    "http://127.0.0.1:5173",  # Alternative address
+    "http://localhost:5173",  
+    "http://127.0.0.1:5173",  
+    "*"                       
 ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    allow_credentials=True,
+    allow_credentials=False,  
     allow_methods=["*"],
     allow_headers=["*"],
 )

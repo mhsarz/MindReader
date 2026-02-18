@@ -14,7 +14,7 @@ function App() {
   const [stats, setStats] = useState(null)
 
   const startGame = async () => {
-    const response = await fetch('http://127.0.0.1:8000/api/experiments', {
+    const response = await fetch('https://mindreader-api.onrender.com/api/experiments', {
           method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ function App() {
 
   const submitGuess = async () => {
    try {
-    const response = await fetch ('http://127.0.0.1:8000/api/responses', {
+    const response = await fetch ('https://mindreader-api.onrender.com/api/responses', {
         method: 'POST',
         
             headers: {
@@ -68,7 +68,7 @@ function App() {
   }
 
   const fetchStats = async () => {
-    const response = await fetch('http://127.0.0.1:8000/api/stats')
+    const response = await fetch('https://mindreader-api.onrender.com/api/stats')
     const data = await response.json()
     setStats(data) // Put the numbers in the backpack
     setStep(4) // Move to the new "Results" scene    
