@@ -1,6 +1,5 @@
 // src/WelcomeScreen.jsx
 
-// 1. We accept 'onStart' as a prop (a tool passed from the parent)
 export default function WelcomeScreen({ onStart }) {
     
     return (

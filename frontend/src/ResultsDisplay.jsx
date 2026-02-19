@@ -13,7 +13,6 @@ export default function ResultsDisplay({ showStats, stats, onFetchStats, onReset
         )
     }
 
-    // This translates your backend data into Recharts data!
     const chartData = stats ? [
         { name: 'High Anchor (500m)', average: Math.round(stats.high_anchor) },
         { name: 'Low Anchor (50m)', average: Math.round(stats.low_anchor) }
