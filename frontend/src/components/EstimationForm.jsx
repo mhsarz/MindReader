@@ -3,11 +3,27 @@
 export default function EstimationForm({ 
     guess, setGuess,          // The Text Input
     confidence, setConfidence, // The Slider
-    onSubmit                  // The "Submit" Button
+    onSubmit, errorMessage                  // The "Submit" Button
 }) {
     return (
         <div className="scene-container">
-            <h3>Your Estimate</h3>
+            <h3>Your Estimation</h3>
+            
+            {
+                errorMessage && (
+                <div style={{
+                backgroundColor: '#fee2e2', // Light red background
+                color: '#991b1b',           // Dark red text
+                padding: '12px 20px',
+                borderRadius: '8px',
+                marginBottom: '20px',
+                border: '1px solid #f87171',
+                fontWeight: 'bold',
+                animation: 'fadeIn 0.5s ease-in' // Gives it a nice pop!
+                }}>
+                ⚠️ {errorMessage}
+                </div>
+            )}
             
             <input 
                 type="text" 

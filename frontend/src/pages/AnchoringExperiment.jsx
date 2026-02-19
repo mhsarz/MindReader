@@ -12,6 +12,7 @@ export default function AnchoringExperiment() {
   const [confidence, setConfidence] = useState(5) // initial confidence
   const [startTime, setStartTime] = useState(0) // start of timer
   const [stats, setStats] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   const startGame = async () => {
     const response = await fetch('https://mindreader-api.onrender.com/api/experiments', {
@@ -36,30 +37,31 @@ export default function AnchoringExperiment() {
   const anchorValue = gameData?.variant === 'high_anchor' ? "500m" : "50m";
 
   const submitGuess = async () => {
+   setErrorMessage(null) // Clear any old errors when they try again!
+   
    try {
     const response = await fetch ('https://mindreader-api.onrender.com/api/responses', {
         method: 'POST',
-        
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              experiment_id: gameData.id,
-              value: guess,
-              confidence: confidence,
-              reaction_time: Date.now() - startTime
-            })
-          }
-    )
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          experiment_id: gameData.id,
+          value: guess,
+          confidence: confidence,
+          reaction_time: Date.now() - startTime
+        })
+    })
    
-   if (response.ok) {
-        setStep(3) // Only move forward if the save worked
-      } else {
-        console.error("Failed to save response")
-      }
-    } catch (error) {
-      console.error("Error submitting guess:", error)
+    if (response.ok) {
+        setStep(3) 
+    } else {
+        const errorData = await response.json()
+        setErrorMessage(errorData.detail || "Something went wrong.")
     }
+   } catch (error) {
+      setErrorMessage("Network error. Please check your connection.")
+   }
   }
 
   const handleStartEstimation = () => {
@@ -90,11 +92,12 @@ export default function AnchoringExperiment() {
         ) : 
         step === 2 ? (
           <EstimationForm 
-            guess={guess}             // Wire 1: The current text
-            setGuess={setGuess}       // Wire 2: The tool to change text
-            confidence={confidence}   // Wire 3: The current slider value
-            setConfidence={setConfidence} // Wire 4: The tool to move slider
-            onSubmit={submitGuess}    // Wire 5: The submit button
+            guess={guess}             
+            setGuess={setGuess}       
+            confidence={confidence}   
+            setConfidence={setConfidence} 
+            onSubmit={submitGuess}    
+            errorMessage={errorMessage} 
           />
         ) :  
         step == 3 || step == 4 ? (
