@@ -56,12 +56,28 @@ def start_experiment(experiment_data: ExperimentStart, db: Session = Depends(get
     return new_experiment
 
 @app.post("/api/responses", response_model=Response)
-def submit_response (response : ResponseCreate , db: Session = Depends(get_session)) :
-    new_response = Response (
-        experiment_id = response.experiment_id,
-        value = response.value,
-        confidence = response.confidence,
-        reaction_time = response.reaction_time
+def submit_response(response: ResponseCreate, db: Session = Depends(get_session)):
+    
+    # 1. Look up the specific experiment this response belongs to
+    experiment = db.get(Experiment, response.experiment_id)
+    if not experiment:
+        raise HTTPException(status_code=404, detail="Experiment not found")
+
+    # 2. The Smart Bouncer: Apply rules based on the bias_type
+    if experiment.bias_type == "anchoring":
+        try:
+            float(response.value) # Must be a number
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Invalid answer. Please provide a valid number and try again.")
+            
+    elif experiment.bias_type == "framing":
+        pass # complete later with more experiments
+
+    new_response = Response( 
+        experiment_id=response.experiment_id,
+        value=response.value,
+        confidence=response.confidence,
+        reaction_time=response.reaction_time
     )
     db.add(new_response)
     db.commit()
