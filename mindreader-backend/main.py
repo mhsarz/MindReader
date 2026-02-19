@@ -4,7 +4,7 @@ from database import create_db_and_tables, get_session
 from models import Experiment, UserSession, Response
 from schemas import ExperimentRead, ExperimentStart, ResponseCreate
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import func  
+from sqlalchemy import func, cast, Float
 import random
 
 app = FastAPI()
@@ -71,12 +71,11 @@ def submit_response (response : ResponseCreate , db: Session = Depends(get_sessi
 
 @app.get ("/api/stats")
 def get_stats (db: Session = Depends(get_session)):
-    # Calculate High Anchor Average
-    avg_high = db.query(func.avg(Response.value)).join(Experiment).filter(Experiment.variant == "high_anchor").scalar()
-    # 2. Calculate Low Average
-    avg_low = db.query(func.avg(Response.value)).join(Experiment).filter(Experiment.variant == "low_anchor").scalar()
+    avg_high = db.query(func.avg(cast(Response.value, Float))).join(Experiment).filter(Experiment.variant == "high_anchor").scalar()
+    
+    avg_low = db.query(func.avg(cast(Response.value, Float))).join(Experiment).filter(Experiment.variant == "low_anchor").scalar()
+    
     return {
-        "high_anchor": avg_high,
-        "low_anchor": avg_low
+        "high_anchor": avg_high or 0,
+        "low_anchor": avg_low or 0
     }
-

@@ -9,6 +9,7 @@ DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./sql_app.db")
 engine = create_engine(DATABASE_URL)
 
 def create_db_and_tables():
+    from models import UserSession, Experiment, Response 
     SQLModel.metadata.create_all(engine)
 
 def get_session():
