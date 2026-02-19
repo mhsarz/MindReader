@@ -1,4 +1,4 @@
-// src/AnchorQuestion.jsx
+// src/components/AnchorQuestion.jsx
 
 // Notice we are asking for TWO tools now:
 // 1. anchorValue (The data: "50m" or "500m")

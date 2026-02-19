@@ -4,7 +4,7 @@ from database import create_db_and_tables, get_session
 from models import Experiment, UserSession, Response
 from schemas import ExperimentRead, ExperimentStart, ResponseCreate
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import func, cast, Float
+from sqlalchemy import func, cast, Float, select
 import random
 
 app = FastAPI()
@@ -58,10 +58,10 @@ def start_experiment(experiment_data: ExperimentStart, db: Session = Depends(get
 @app.post("/api/responses", response_model=Response)
 def submit_response (response : ResponseCreate , db: Session = Depends(get_session)) :
     new_response = Response (
-        experiment_id=response.experiment_id,
+        experiment_id = response.experiment_id,
         value = response.value,
-        confidence=response.confidence,
-        reaction_time=response.reaction_time
+        confidence = response.confidence,
+        reaction_time = response.reaction_time
     )
     db.add(new_response)
     db.commit()
@@ -69,13 +69,30 @@ def submit_response (response : ResponseCreate , db: Session = Depends(get_sessi
 
     return new_response
 
-@app.get ("/api/stats")
-def get_stats (db: Session = Depends(get_session)):
-    avg_high = db.query(func.avg(cast(Response.value, Float))).join(Experiment).filter(Experiment.variant == "high_anchor").scalar()
+@app.get("/api/stats/{bias_type}")
+def get_stats(bias_type: str, db: Session = Depends(get_session)):
     
-    avg_low = db.query(func.avg(cast(Response.value, Float))).join(Experiment).filter(Experiment.variant == "low_anchor").scalar()
+    # If the frontend asks for anchoring stats:
+    if bias_type == "anchoring":
+        avg_high = db.query(func.avg(cast(Response.value, Float))).join(Experiment).filter(
+            Experiment.bias_type == "anchoring", 
+            Experiment.variant == "high_anchor"
+        ).scalar()
+        
+        avg_low = db.query(func.avg(cast(Response.value, Float))).join(Experiment).filter(
+            Experiment.bias_type == "anchoring", 
+            Experiment.variant == "low_anchor"
+        ).scalar()
+        
+        return {
+            "high_anchor": avg_high or 0,
+            "low_anchor": avg_low or 0
+        }
     
-    return {
-        "high_anchor": avg_high or 0,
-        "low_anchor": avg_low or 0
-    }
+    # If the frontend asks for framing stats:
+    elif bias_type == "framing":
+        # We will build this logic later!
+        return {"message": "Framing stats not built yet"}
+
+    # Fallback
+    raise HTTPException(status_code=404, detail="Bias type not found")

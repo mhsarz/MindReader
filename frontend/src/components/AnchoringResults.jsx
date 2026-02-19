@@ -1,6 +1,6 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
-export default function ResultsDisplay({ showStats, stats, onFetchStats, onReset }) {
+export default function AnchoringResults({ showStats, stats, onFetchStats, onReset }) {
     
     if (!showStats) {
         return (

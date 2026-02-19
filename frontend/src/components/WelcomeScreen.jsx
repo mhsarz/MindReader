@@ -1,4 +1,4 @@
-// src/WelcomeScreen.jsx
+// src/components/WelcomeScreen.jsx
 
 export default function WelcomeScreen({ onStart }) {
     
