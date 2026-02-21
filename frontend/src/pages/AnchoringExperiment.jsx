@@ -82,6 +82,8 @@ export default function AnchoringExperiment() {
         step === 0 ? (
           <WelcomeScreen 
             onStart={startGame} 
+            title="The Anchoring Effect"
+            description="How do initial numbers bias our final estimations?"
           />
         ) : 
         step === 1 ?( 
@@ -107,6 +109,7 @@ export default function AnchoringExperiment() {
             onFetchStats={fetchStats}   // The button to get data
             onReset={() => window.location.reload()} // The Play Again button
           />
+          
         )
         : 
         null 

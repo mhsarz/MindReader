@@ -7,8 +7,12 @@ export default function AnchoringResults({ showStats, stats, onFetchStats, onRes
             <div className="scene-container">
                 <h2>Thank You!</h2>
                 <p>Your guess has been recorded.</p>
+                <button onClick={() => window.location.href = '/'}>
+                ← Return to Hub
+                </button>
                 <button onClick={onFetchStats}>See Community Results</button>
                 <button onClick={onReset}>Play Again</button>
+                
             </div>
         )
     }

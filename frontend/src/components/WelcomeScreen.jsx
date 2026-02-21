@@ -1,14 +1,9 @@
-// src/components/WelcomeScreen.jsx
-
-export default function WelcomeScreen({ onStart }) {
-    
+export default function WelcomeScreen({ onStart, title, description }) {
     return (
-        <div className="welcome-container">
-            <h1>The Anchoring Effect</h1>
-            <p>Welcome to the experiment.</p>
-            
-            <button onClick={onStart}>Start The Experiment</button>
-            
+        <div className="scene-container">
+            <h2>{title}</h2>
+            <p style={{ marginBottom: '30px', color: '#ccc' }}>{description}</p>
+            <button onClick={onStart}>Begin Experiment</button>
         </div>
     )
 }

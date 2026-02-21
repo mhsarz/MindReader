@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Hub from './pages/Hub';
 import AnchoringExperiment from './pages/AnchoringExperiment';
+import FramingExperiment from './pages/FramingExperiment';
 
-// Placeholders for your future pages!
-const FramingExperiment = () => <div style={{padding: '50px', color: 'white'}}>Framing Experiment Coming Soon!</div>;
+// Placeholders for your future pages
 const CognitiveLibrary = () => <div style={{padding: '50px', color: 'white'}}>Cognitive Library Coming Soon!</div>;
 
 export default function App() {

@@ -41,7 +41,8 @@ def start_experiment(experiment_data: ExperimentStart, db: Session = Depends(get
     if experiment_data.bias_type == "anchoring":
         # Randomly pick one of the two "universes"
         game_variant = random.choice(["low_anchor", "high_anchor"])
-
+    elif experiment_data.bias_type == "framing":
+        game_variant = random.choice(["positive_framing", "negative_framing"])
     # 3. Create the experiment with that variant
     new_experiment = Experiment(
         session_id = experiment_data.session_id, # using the ID we handled earlier
@@ -107,8 +108,37 @@ def get_stats(bias_type: str, db: Session = Depends(get_session)):
     
     # If the frontend asks for framing stats:
     elif bias_type == "framing":
-        # We will build this logic later!
-        return {"message": "Framing stats not built yet"}
+        positive_safe = db.query(func.count(Response.id)).join(Experiment).filter(
+                Experiment.bias_type == "framing",           # 1. Must be the framing game
+                Experiment.variant == "positive_framing",    # 2. Must be the positive universe
+                Response.value == "safe_choice"              # 3. Must have picked the safe option!
+                ).scalar()
+        positive_risky = db.query(func.count(Response.id)).join(Experiment).filter(
+                Experiment.bias_type == "framing",           
+                Experiment.variant == "positive_framing",    
+                Response.value == "risky_choice"             
+                ).scalar()
+        negative_safe = db.query(func.count(Response.id)).join(Experiment).filter(
+                Experiment.bias_type == "framing",           
+                Experiment.variant == "negative_framing",    
+                Response.value == "safe_choice"              
+                ).scalar()
+        negative_risky = db.query(func.count(Response.id)).join(Experiment).filter(
+                Experiment.bias_type == "framing",         
+                Experiment.variant == "negative_framing",    
+                Response.value == "risky_choice"             
+                ).scalar()
+        
+        return {
+            "positive_frame": {
+                "safe_choices": positive_safe or 0,
+                "risky_choices": positive_risky or 0
+            },
+            "negative_frame": {
+                "safe_choices": negative_safe or 0,
+                "risky_choices": negative_risky or 0
+            }
+        }
 
     # Fallback
     raise HTTPException(status_code=404, detail="Bias type not found")
