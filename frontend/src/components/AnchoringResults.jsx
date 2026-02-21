@@ -1,4 +1,4 @@
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts'
 
 export default function AnchoringResults({ showStats, stats, onFetchStats, onReset }) {
     
@@ -39,6 +39,9 @@ export default function AnchoringResults({ showStats, stats, onFetchStats, onRes
             </div>
 
             <button onClick={onReset}>Play Again</button>
+            <button onClick={() => window.location.href = '/'}>
+                ← Return to Hub
+            </button>
         </div>
     )
 }

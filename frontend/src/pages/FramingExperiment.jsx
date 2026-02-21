@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import WelcomeScreen from '../components/WelcomeScreen'
 import FramingQuestion from '../components/FramingQuestion'
+import FramingResults from '../components/FramingResults'
 import '../App.css'
 
 export default function FramingExperiment() {
@@ -44,7 +45,7 @@ export default function FramingExperiment() {
     })
    
     if (response.ok) {
-        setStep(2)
+        setStep(3)
     } else {
         const errorData = await response.json()
         setErrorMessage(errorData.detail || "Something went wrong.")
@@ -85,8 +86,28 @@ export default function FramingExperiment() {
             </button>
           </div>
         )
-        : 
-        null 
+        : step === 3 ? (
+          <div className="scene-container" style={{ maxWidth: '600px' }}>
+            <h2>Choice Recorded!</h2>
+            <p style={{ marginBottom: '30px', color: '#ccc' }}>
+              Thank you for participating in this scenario. Would you like to see how your choice compares to the rest of the community?
+            </p>
+            
+            <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
+              <button onClick={fetchStats}>View Community Results</button>
+              <button onClick={() => window.location.href = '/'}>
+                ← Return to Hub
+            </button>
+            </div>
+          </div>
+        ) :
+        step === 4 ? ( 
+          <FramingResults 
+            stats={stats} 
+            onReset={() => window.location.href = '/'} 
+          />
+        )
+        : null 
       } 
     </div>
   )
