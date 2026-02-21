@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Query
 from sqlmodel import Session
 from database import create_db_and_tables, get_session
 from models import Experiment, UserSession, Response
@@ -147,7 +147,15 @@ def get_stats(bias_type: str, db: Session = Depends(get_session)):
     raise HTTPException(status_code=404, detail="Bias type not found")
 
 @app.get("/api/export")
-def export_csv(db: Session = Depends(get_session)):
+def export_csv(
+        code: str = Query(None), # 1. Look for '?code=' in the URL
+        db: Session = Depends(get_session)
+    ):
+
+    SECRET_PASSCODE = os.getenv("ADMIN_PASSCODE", "fallback_password_123")
+    if code != SECRET_PASSCODE:
+        raise HTTPException(status_code=401, detail="Unauthorized: Invalid admin passcode")
+    
     results = db.query(
         Response.id,
         Experiment.bias_type,
