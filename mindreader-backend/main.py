@@ -6,6 +6,9 @@ from schemas import ExperimentRead, ExperimentStart, ResponseCreate
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import func, cast, Float, select
 import random
+import csv
+import io
+from fastapi.responses import StreamingResponse
 
 app = FastAPI()
 
@@ -142,3 +145,31 @@ def get_stats(bias_type: str, db: Session = Depends(get_session)):
 
     # Fallback
     raise HTTPException(status_code=404, detail="Bias type not found")
+
+@app.get("/api/export")
+def export_csv(db: Session = Depends(get_session)):
+    results = db.query(
+        Response.id,
+        Experiment.bias_type,
+        Experiment.variant,
+        Response.value,
+        Response.confidence,
+        Response.reaction_time
+    ).join(Experiment, Response.experiment_id == Experiment.id).all()
+    # results are all the experiments
+    stream = io.StringIO()
+    writer = csv.writer(stream) # csv
+
+    # row
+    writer.writerow(["response_id", "bias_type", "variant", "value", "confidence", "reaction_time_ms"])
+
+    # data row
+    for row in results:
+        writer.writerow([row.id, row.bias_type, row.variant, row.value, row.confidence, row.reaction_time])
+
+    stream.seek(0)
+
+    response = StreamingResponse(iter([stream.getvalue()]), media_type="text/csv")
+    response.headers["Content-Disposition"] = "attachment; filename=mindreader_data.csv"
+    
+    return response
