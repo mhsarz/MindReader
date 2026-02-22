@@ -2,9 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&display=swap');
 
-:root {
-  /* We keep your midnight blue background, but make everything else subtle */
-  --bg-main: #001524;
+:root {--bg-main: #001524;
   --text-main: #FFECD1;
   --accent-primary: #FF7D00;
   
@@ -12,7 +10,6 @@
   --font-body: 'Source Sans 3', sans-serif;
 }
 
-/* 1. Nuke the default Vite styling and fill the screen */
 html, body, #root, .App, .app-container {
   background-color: var(--bg-main) !important;
   color: var(--text-main);
@@ -30,24 +27,21 @@ h1, h2, h3, h4 {
   letter-spacing: 0.5px;
 }
 
-/* 2. Glassmorphism Experiment Cards */
 .experiment-card {
-  /* Instead of solid teal, we use a transparent white/teal mix to look like glass */
   background: rgba(21, 97, 109, 0.1); 
-  border: 1px solid rgba(255, 236, 209, 0.1); /* Very subtle cream border */
+  border: 1px solid rgba(255, 236, 209, 0.1); 
   border-radius: 16px;
   padding: 40px 30px;
   cursor: pointer;
-  backdrop-filter: blur(10px); /* The frosted glass effect */
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Super smooth bounce */
+  backdrop-filter: blur(10px); 
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* What happens when the mouse touches the card */
 .experiment-card:hover {
-  transform: translateY(-10px); /* Floats up */
-  background: rgba(21, 97, 109, 0.2); /* Gets slightly brighter */
-  border-color: var(--accent-primary); /* Border lights up orange */
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 125, 0, 0.15); /* Orange underglow */
+  transform: translateY(-10px); 
+  background: rgba(21, 97, 109, 0.2); 
+  border-color: var(--accent-primary); 
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 125, 0, 0.15); 
 }
 
 .experiment-card h3 {
@@ -83,12 +77,12 @@ h1, h2, h3, h4 {
 }
 
 .experiment-card:hover .card-action-text {
-  opacity: 1; /* Text gets brighter on hover */
+  opacity: 1;
 }
 
 /* --- UI COMPONENTS --- */
 
-/* The Premium Glass Panel (for experiments and results) */
+/* The Premium Glass Panel */
 .glass-panel {
   background: rgba(21, 97, 109, 0.1); 
   border: 1px solid rgba(255, 236, 209, 0.1);
@@ -106,7 +100,7 @@ h1, h2, h3, h4 {
 /* The Main Call-To-Action Button */
 .btn-primary {
   background-color: var(--accent-primary);
-  color: #000; /* Dark text on an orange button looks incredibly sharp */
+  color: #000;
   border: none;
   padding: 16px 40px;
   font-size: 1.1rem;
@@ -123,7 +117,7 @@ h1, h2, h3, h4 {
 .btn-primary:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(255, 125, 0, 0.4);
-  background-color: #ff8e24; /* Gets slightly brighter */
+  background-color: #ff8e24; 
 }
 
 /* The Subtle Secondary Button */

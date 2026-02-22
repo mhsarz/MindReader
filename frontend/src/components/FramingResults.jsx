@@ -3,7 +3,6 @@ import '../index.css'
 
 export default function FramingResults({ stats, onReset }) {
   
-  // Format the Python JSON into a grouped data structure for Recharts
   const data = stats ? [
     {
       name: 'Positive Frame (Saved)',
@@ -64,7 +63,6 @@ export default function FramingResults({ stats, onReset }) {
                 labelStyle={{ color: 'var(--text-main)', fontWeight: 'bold', marginBottom: '5px' }}
               />
 
-              {/* Added a Legend so users know which color is Safe vs Risky */}
               <Legend wrapperStyle={{ paddingTop: '20px', opacity: 0.9, fontFamily: 'var(--font-body)' }} />
               
               {/* The Grouped Bars */}

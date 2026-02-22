@@ -15,7 +15,7 @@ export default function Hub({ onSelectExperiment }) {
         A cognitive science platform exploring the invisible biases that shape our decisions.
       </p>
 
-      {/* The CSS Grid for our Cards */}
+      {/* The CSS Grid for Cards */}
       <div style={{ 
         display: 'grid', 
         gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 

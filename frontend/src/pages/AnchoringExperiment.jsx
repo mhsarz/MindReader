@@ -117,9 +117,4 @@ export default function AnchoringExperiment() {
     </div>
   )
 
-//   return (
-//   <div className="app-container">
-//      <Hub onSelectExperiment={(bias) => console.log("User selected:", bias)} />
-//   </div>
-// )
 }

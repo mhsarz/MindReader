@@ -22,7 +22,6 @@ export default function EstimationForm({ guess, setGuess, confidence, setConfide
           Based on your intuition, what is the exact height of the tallest redwood tree in meters?
         </p>
 
-        {/* The Error Message Box (Only shows up if Python sends an error!) */}
         {errorMessage && (
           <div style={{ 
             backgroundColor: 'rgba(255, 100, 100, 0.1)', 
@@ -60,7 +59,6 @@ export default function EstimationForm({ guess, setGuess, confidence, setConfide
                   outline: 'none',
                   transition: 'border-color 0.3s ease'
               }}
-              /* This makes the border turn orange when they click inside! */
               onFocus={(e) => e.target.style.borderColor = 'var(--accent-primary)'}
               onBlur={(e) => e.target.style.borderColor = 'rgba(255, 236, 209, 0.2)'}
             />
@@ -78,7 +76,6 @@ export default function EstimationForm({ guess, setGuess, confidence, setConfide
               max="10" 
               value={confidence}
               onChange={(e) => setConfidence(e.target.value)}
-              /* accentColor is a magic CSS trick to theme standard HTML inputs */
               style={{ width: '100%', cursor: 'pointer', accentColor: 'var(--accent-primary)' }}
             />
             

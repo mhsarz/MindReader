@@ -2,7 +2,6 @@ import '../index.css'
 
 export default function WelcomeScreen({ onStart, title, description }) {
   return (
-    // This wrapper centers everything perfectly on the screen
     <div style={{ 
         display: 'flex', 
         flexDirection: 'column', 
@@ -12,7 +11,6 @@ export default function WelcomeScreen({ onStart, title, description }) {
         padding: '20px' 
     }}>
       
-      {/* Our new reusable glass box! */}
       <div className="glass-panel" style={{ maxWidth: '600px', textAlign: 'center' }}>
         
         <h1 style={{ fontSize: '3rem', marginBottom: '15px' }}>

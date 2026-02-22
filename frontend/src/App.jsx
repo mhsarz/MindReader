@@ -4,7 +4,7 @@ import AnchoringExperiment from './pages/AnchoringExperiment';
 import FramingExperiment from './pages/FramingExperiment';
 import ResearcherDashboard from './pages/ResearcherDashboard'
 
-// Placeholders for your future pages
+// Placeholders for future pages
 const CognitiveLibrary = () => <div style={{padding: '50px', color: 'white'}}>Cognitive Library Coming Soon!</div>;
 
 export default function App() {

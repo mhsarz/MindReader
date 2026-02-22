@@ -2,7 +2,6 @@ import '../index.css'
 
 export default function FramingQuestion({ variant, onNext }) {
   
-  // We dynamically change the wording of the buttons based on the Python variant!
   const isPositive = variant === 'positive_framing';
 
   const safeText = isPositive 

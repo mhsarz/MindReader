@@ -15,7 +15,6 @@ env/
 .vscode/
 
 # --- React / Frontend ---
-# This is massive, never push it. Users install it via 'npm install'
 node_modules/
 
 # Build outputs
@@ -56,5 +55,8 @@ dist-ssr
 *.sln
 *.sw?
 
-# Ignore the secret lockbox
-.env
+vercel.json
+vite.config.js
+
+
+

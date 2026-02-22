@@ -14,7 +14,6 @@ export default function AnchoringResults({ showStats, stats, onFetchStats, onRes
       <div className="glass-panel" style={{ maxWidth: '700px', width: '100%', textAlign: 'center' }}>
         
         {!showStats ? (
-          /* --- STEP 3: THE "THANK YOU" SCREEN --- */
           <>
             <h2 style={{ fontSize: '2.5rem', marginBottom: '15px', color: 'var(--text-main)' }}>
               Experiment <span style={{ color: 'var(--accent-primary)' }}>Complete</span>
@@ -35,7 +34,6 @@ export default function AnchoringResults({ showStats, stats, onFetchStats, onRes
             </button>
           </>
         ) : (
-          /* --- STEP 4: THE DATA DASHBOARD --- */
           <>
             <h2 style={{ fontSize: '2.5rem', marginBottom: '10px', color: 'var(--text-main)' }}>
               Community <span style={{ color: 'var(--accent-primary)' }}>Results</span>
@@ -45,15 +43,12 @@ export default function AnchoringResults({ showStats, stats, onFetchStats, onRes
               Average height estimations based on the initial anchor presented to the user.
             </p>
             
-            {/* The Recharts Container */}
             <div style={{ height: '350px', width: '100%', marginBottom: '40px' }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data} margin={{ top: 20, right: 20, left: -20, bottom: 5 }}>
                   
-                  {/* Subtle horizontal grid lines */}
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(255, 236, 209, 0.1)" vertical={false} />
                   
-                  {/* X-Axis styling */}
                   <XAxis 
                     dataKey="name" 
                     stroke="var(--text-main)" 
@@ -62,7 +57,6 @@ export default function AnchoringResults({ showStats, stats, onFetchStats, onRes
                     tickLine={false}
                   />
                   
-                  {/* Y-Axis styling */}
                   <YAxis 
                     stroke="var(--text-main)" 
                     tick={{ fill: 'var(--text-main)', opacity: 0.6, fontFamily: 'var(--font-body)' }} 
@@ -70,7 +64,6 @@ export default function AnchoringResults({ showStats, stats, onFetchStats, onRes
                     tickLine={false}
                   />
                   
-                  {/* Custom Midnight Blue Tooltip */}
                   <Tooltip 
                     cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }}
                     contentStyle={{ 
@@ -80,9 +73,7 @@ export default function AnchoringResults({ showStats, stats, onFetchStats, onRes
                       color: 'var(--text-main)',
                       fontFamily: 'var(--font-body)'
                     }}
-                    /* This controls the text color of the actual data numbers! */
                     itemStyle={{ color: '#888888' }} 
-                    /* This controls the text color of the title (e.g., "Low Anchor") */
                     labelStyle={{ color: 'var(--text-main)', fontWeight: 'bold', marginBottom: '5px' }}
                   />
                   
