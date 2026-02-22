@@ -1,61 +1,52 @@
 import { useNavigate } from 'react-router-dom';
+import '../index.css'; 
 
 export default function Hub({ onSelectExperiment }) {
   const navigate = useNavigate();
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 20px', textAlign: 'center' }}>
-      <h1 style={{ fontSize: '2.5rem', marginBottom: '10px' }}>MindReader</h1>
-      <p style={{ color: '#888', marginBottom: '40px', fontSize: '1.2rem' }}>
-        A Cognitive Science & Human-Computer Interaction Platform
+    <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '80px 20px', textAlign: 'center' }}>
+      
+      {/* Sleek Header Section */}
+      <h1 style={{ fontSize: '4rem', marginBottom: '15px', color: 'var(--text-main)' }}>
+        MindReader<span style={{ color: 'var(--accent-primary)' }}>.</span>
+      </h1>
+      <p style={{ opacity: '0.6', marginBottom: '80px', fontSize: '1.2rem', maxWidth: '600px', margin: '0 auto 80px', lineHeight: '1.6' }}>
+        A cognitive science platform exploring the invisible biases that shape our decisions.
       </p>
 
       {/* The CSS Grid for our Cards */}
       <div style={{ 
         display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
-        gap: '20px' 
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+        gap: '30px',
+        textAlign: 'left' 
       }}>
         
-        {/* Card 1: Anchoring (Active) */}
-        <div onClick={() => navigate('/anchoring')}
-          style={{
-            backgroundColor: '#1a1a1a', border: '1px solid #646cff', borderRadius: '12px', 
-            padding: '20px', cursor: 'pointer', transition: 'transform 0.2s'
-          }}
-          onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-          onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
-        >
-          <div style={{ fontSize: '2rem', marginBottom: '10px' }}>⚓</div>
+        {/* Card 1: Anchoring */}
+        <div className="experiment-card" onClick={() => navigate('/anchoring')}>
+          <div style={{ fontSize: '2.5rem', marginBottom: '20px' }}>⚓</div>
           <h3>The Anchoring Effect</h3>
-          <p style={{ color: '#aaa', fontSize: '0.9rem' }}>How do initial numbers bias our final estimations?</p>
-          <div style={{ marginTop: '15px', color: '#646cff', fontWeight: 'bold' }}>Start Experiment →</div>
+          <p>How do initial numbers and completely unrelated data bias our final estimations?</p>
+          <div className="card-action-text">Start Experiment →</div>
         </div>
 
         {/* Card 2: Framing */}
-        <div onClick={() => navigate('/framing')}
-            style={{
-            backgroundColor: '#1a1a1a', border: '1px solid #646cff', borderRadius: '12px', 
-            padding: '20px', cursor: 'pointer', transition: 'transform 0.2s'
-          }}
-          onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-          onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
-          >
-          <div style={{ fontSize: '2rem', marginBottom: '10px' }}>🖼️</div>
+        <div className="experiment-card" onClick={() => navigate('/framing')}>
+          <div style={{ fontSize: '2.5rem', marginBottom: '20px' }}>🖼️</div>
           <h3>The Framing Effect</h3>
-          <p style={{ color: '#aaa', fontSize: '0.9rem' }}>Does the presentation of risk change your choices?</p>
-          <div style={{ marginTop: '15px', color: '#646cff', fontWeight: 'bold' }}>Start Experiment →</div>
+          <p>Does the presentation of a scenario fundamentally change your tolerance for risk?</p>
+          <div className="card-action-text">Start Experiment →</div>
         </div>
 
         {/* Card 3: Library (Locked) */}
-        <div style={{
-            backgroundColor: '#111', border: '1px solid #333', borderRadius: '12px', 
-            padding: '20px', opacity: '0.6'
-          }}>
-          <div style={{ fontSize: '2rem', marginBottom: '10px' }}>📚</div>
+        <div className="experiment-card" style={{ opacity: '0.5', cursor: 'not-allowed', transform: 'none', borderColor: 'rgba(255,255,255,0.05)' }}>
+          <div style={{ fontSize: '2.5rem', marginBottom: '20px', filter: 'grayscale(100%)' }}>📚</div>
           <h3>Cognitive Library</h3>
-          <p style={{ color: '#aaa', fontSize: '0.9rem' }}>Read the neuroscience and psychology behind the biases.</p>
-          <div style={{ marginTop: '15px', color: '#555', fontWeight: 'bold' }}>Coming Soon 🔒</div>
+          <p>Read the neuroscience and psychological research behind these cognitive biases.</p>
+          <div className="card-action-text" style={{ color: 'var(--text-main)', opacity: '0.4' }}>
+            Coming Soon 🔒
+          </div>
         </div>
 
       </div>

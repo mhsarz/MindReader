@@ -1,51 +1,98 @@
-// src/EstimationForm.jsx
+import '../index.css'
 
-export default function EstimationForm({ 
-    guess, setGuess,          // The Text Input
-    confidence, setConfidence, // The Slider
-    onSubmit, errorMessage                  // The "Submit" Button
-}) {
-    return (
-        <div className="scene-container">
-            <h3>Your Estimation</h3>
-            
-            {
-                errorMessage && (
-                <div style={{
-                backgroundColor: '#fee2e2', // Light red background
-                color: '#991b1b',           // Dark red text
-                padding: '12px 20px',
-                borderRadius: '8px',
-                marginBottom: '20px',
-                border: '1px solid #f87171',
-                fontWeight: 'bold',
-                animation: 'fadeIn 0.5s ease-in' // Gives it a nice pop!
-                }}>
-                ⚠️ {errorMessage}
-                </div>
-            )}
+export default function EstimationForm({ guess, setGuess, confidence, setConfidence, onSubmit, errorMessage }) {
+  return (
+    // Centers the panel on the screen
+    <div style={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        minHeight: '80vh', 
+        padding: '20px' 
+    }}>
+      
+      <div className="glass-panel" style={{ maxWidth: '600px', width: '100%', textAlign: 'center' }}>
+        
+        <h2 style={{ fontSize: '2.2rem', marginBottom: '15px', color: 'var(--text-main)' }}>
+          Part 2: <span style={{ color: 'var(--accent-primary)' }}>Your Estimate</span>
+        </h2>
+
+        <p style={{ fontSize: '1.1rem', marginBottom: '30px', opacity: '0.8' }}>
+          Based on your intuition, what is the exact height of the tallest redwood tree in meters?
+        </p>
+
+        {/* The Error Message Box (Only shows up if Python sends an error!) */}
+        {errorMessage && (
+          <div style={{ 
+            backgroundColor: 'rgba(255, 100, 100, 0.1)', 
+            border: '1px solid #ff6464', 
+            color: '#ff6464', 
+            padding: '12px', 
+            borderRadius: '8px', 
+            marginBottom: '20px',
+            fontWeight: 'bold',
+            fontSize: '0.9rem'
+          }}>
+            ⚠ {errorMessage}
+          </div>
+        )}
+
+        {/* The Guess Input */}
+        <div style={{ marginBottom: '30px', textAlign: 'left' }}>
+            <label style={{ display: 'block', marginBottom: '10px', fontWeight: 'bold', color: 'var(--accent-primary)', textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.85rem' }}>
+                Your Guess (in meters)
+            </label>
+            <input 
+              type="number" 
+              value={guess}
+              onChange={(e) => setGuess(e.target.value)}
+              placeholder="e.g., 150"
+              style={{ 
+                  width: '100%', 
+                  padding: '15px', 
+                  fontSize: '1.2rem',
+                  borderRadius: '8px', 
+                  border: '1px solid rgba(255, 236, 209, 0.2)', 
+                  backgroundColor: 'rgba(0, 0, 0, 0.3)', 
+                  color: 'var(--text-main)',
+                  boxSizing: 'border-box',
+                  outline: 'none',
+                  transition: 'border-color 0.3s ease'
+              }}
+              /* This makes the border turn orange when they click inside! */
+              onFocus={(e) => e.target.style.borderColor = 'var(--accent-primary)'}
+              onBlur={(e) => e.target.style.borderColor = 'rgba(255, 236, 209, 0.2)'}
+            />
+        </div>
+
+        {/* The Confidence Slider */}
+        <div style={{ marginBottom: '40px', textAlign: 'left' }}>
+            <label style={{ display: 'block', marginBottom: '10px', fontWeight: 'bold', color: 'var(--accent-primary)', textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.85rem' }}>
+                Confidence Level: <span style={{ color: 'var(--text-main)' }}>{confidence}/10</span>
+            </label>
             
             <input 
-                type="text" 
-                value={guess} 
-                onChange={(e) => setGuess(e.target.value)} 
-                placeholder="Enter height in meters"
+              type="range" 
+              min="1" 
+              max="10" 
+              value={confidence}
+              onChange={(e) => setConfidence(e.target.value)}
+              /* accentColor is a magic CSS trick to theme standard HTML inputs */
+              style={{ width: '100%', cursor: 'pointer', accentColor: 'var(--accent-primary)' }}
             />
             
-            <div style={{ marginTop: '20px' }}>
-                <p>Confidence: {confidence}/10</p>
-                <input 
-                    type="range" 
-                    value={confidence} 
-                    min="1" 
-                    max="10" 
-                    onChange={(e) => setConfidence(e.target.value)} 
-                />
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px', opacity: '0.5', fontSize: '0.8rem', fontWeight: '600' }}>
+                <span>Wild Guess</span>
+                <span>Absolutely Certain</span>
             </div>
-
-            <button onClick={onSubmit} style={{ marginTop: '20px' }}>
-                Submit Final Guess
-            </button>
         </div>
-    )
+
+        <button onClick={onSubmit} className="btn-primary" style={{ width: '100%' }}>
+            Submit Answer
+        </button>
+        
+      </div>
+    </div>
+  )
 }

@@ -87,17 +87,19 @@ export default function FramingExperiment() {
           </div>
         )
         : step === 3 ? (
-          <div className="scene-container" style={{ maxWidth: '600px' }}>
-            <h2>Choice Recorded!</h2>
-            <p style={{ marginBottom: '30px', color: '#ccc' }}>
-              Thank you for participating in this scenario. Would you like to see how your choice compares to the rest of the community?
-            </p>
-            
-            <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
-              <button onClick={fetchStats}>View Community Results</button>
-              <button onClick={() => window.location.href = '/'}>
-                ← Return to Hub
-            </button>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
+            <div className="glass-panel" style={{ maxWidth: '600px', textAlign: 'center' }}>
+              <h2 style={{ fontSize: '2.5rem', marginBottom: '15px' }}>Choice <span style={{ color: 'var(--accent-primary)' }}>Recorded!</span></h2>
+              <p style={{ marginBottom: '30px', opacity: '0.8', lineHeight: '1.6' }}>
+                Thank you for participating in this scenario. Would you like to see how your choice compares to the rest of the community?
+              </p>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', alignItems: 'center' }}>
+                <button onClick={fetchStats} className="btn-primary" style={{ width: '100%' }}>View Community Results</button>
+                <button onClick={() => window.location.href = '/'} className="btn-secondary">
+                  ← Return to Hub
+                </button>
+              </div>
             </div>
           </div>
         ) :
