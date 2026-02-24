@@ -39,14 +39,12 @@ export default function Hub({ onSelectExperiment }) {
           <div className="card-action-text">Start Experiment →</div>
         </div>
 
-        {/* Card 3: Library (Locked) */}
-        <div className="experiment-card" style={{ opacity: '0.5', cursor: 'not-allowed', transform: 'none', borderColor: 'rgba(255,255,255,0.05)' }}>
-          <div style={{ fontSize: '2.5rem', marginBottom: '20px', filter: 'grayscale(100%)' }}>📚</div>
+        {/* Card 3: Library*/}
+        <div className="experiment-card" onClick={() => navigate('/cognitive-library')}>
+          <div style={{ fontSize: '2.5rem', marginBottom: '20px'}}>📚</div>
           <h3>Cognitive Library</h3>
           <p>Read the neuroscience and psychological research behind these cognitive biases.</p>
-          <div className="card-action-text" style={{ color: 'var(--text-main)', opacity: '0.4' }}>
-            Coming Soon 🔒
-          </div>
+          <div className="card-action-text"> Read More →</div>
         </div>
 
       </div>
