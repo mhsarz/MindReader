@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { articles } from '../data/articles';
+import { articles } from '../data/articles'; 
 import '../index.css';
-
-
 
 export default function CognitiveLibrary() {
   const navigate = useNavigate();
@@ -16,7 +14,36 @@ export default function CognitiveLibrary() {
   return (
     <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '50px 20px' }}>
       
-      {/* 2. The Filter Buttons (Simple for now) */}
+      {/*Header Section*/}
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: '1fr auto 1fr',
+        alignItems: 'center', 
+        marginBottom: '40px' 
+      }}>
+        
+        {/* Left Column: The Button */}
+        <div style={{ textAlign: 'left' }}>
+          <button 
+            onClick={() => navigate('/')} 
+            className="btn-secondary"
+            style={{ margin: 0 }} 
+          >
+            ← Return to Hub
+          </button>
+        </div>
+        
+        {/* Center Column: The Title */}
+        <h1 style={{ margin: 0, fontSize: '2.5rem', textAlign: 'center', whiteSpace: 'nowrap' }}>
+            Cognitive <span style={{ color: 'var(--accent-primary)' }}>Library</span>
+        </h1>
+
+        {/* balance */}
+        <div></div>
+        
+      </div>
+
+      {/* Filter Buttons */}
       <div style={{ marginBottom: '40px', display: 'flex', gap: '10px', justifyContent: 'center' }}>
         {['All', 'Neuroscience', 'Biases', 'HCI'].map(tag => (
           <button 
@@ -30,32 +57,30 @@ export default function CognitiveLibrary() {
         ))}
       </div>
 
-      {/* 3. The Grid Container (OUTSIDE the loop!) */}
+      {/* The Article Grid */}
       <div style={{ 
         display: 'grid', 
         gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
         gap: '30px' 
       }}>
         
-        {filteredArticles.map((articles) => (
-          // 4. The Card (Must have a unique 'key')
+        {filteredArticles.map((article) => (
           <div 
-            key={articles.id} 
+            key={article.id} 
             className="experiment-card" 
-            onClick={() => navigate('/library/' + articles.id)}
-            style={{ textAlign: 'left', padding: '30px' }} // Override centered text
+            onClick={() => navigate('/library/' + article.id)}
+            style={{ textAlign: 'left', padding: '30px' }}
           >
             <div style={{ marginBottom: '15px', color: 'var(--accent-primary)', fontSize: '0.8rem', fontWeight: 'bold', textTransform: 'uppercase' }}>
-               ⏱️ {articles.readTime} Read
+               ⏱️ {article.readTime} Read
             </div>
             
-            <h3 style={{ fontSize: '1.8rem', marginBottom: '10px' }}>{articles.title}</h3>
+            <h3 style={{ fontSize: '1.8rem', marginBottom: '10px' }}>{article.title}</h3>
             
-            <p style={{ marginBottom: '20px', opacity: 0.8 }}>{articles.excerpt}</p>
+            <p style={{ marginBottom: '20px', opacity: 0.8 }}>{article.excerpt}</p>
             
-            {/* The Tags Pill Box */}
             <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-              {articles.tags.map(tag => (
+              {article.tags.map(tag => (
                 <span key={tag} style={{ 
                   backgroundColor: 'rgba(255, 255, 255, 0.1)', 
                   padding: '4px 10px', 
