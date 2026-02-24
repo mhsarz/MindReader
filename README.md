@@ -10,8 +10,8 @@ Built as a proof-of-concept for Human-Computer Interaction (HCI) research, this 
 
 ## Current & Planned Modules
 * 🧠 **The Anchoring Effect (Live):** An A/B tested experiment measuring how initial numerical anchors influence user estimations.
-* 🖼️ **The Framing Effect (In Development):** Measuring risk tolerance based on how choices are presented.
-* 📚 **Cognitive Library (Planned):** An educational hub featuring articles explaining the psychology and neuroscience behind each bias tested on the platform.
+* 🖼️ **The Framing Effect (Live):** Measuring risk tolerance based on how choices are presented.
+* 📚 **Cognitive Library (Live):** An educational hub featuring articles explaining the psychology and neuroscience behind each bias tested on the platform.
 
 ## The Tech Stack
 * **Frontend:** React, Vite, Recharts (for real-time data visualization)
